@@ -108,7 +108,6 @@ class ViewController: UIViewController {
         buttons[currentButtonY][currentButtonX]?.borderColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
         if buttons[currentButtonY][currentButtonX]?.titleLabel?.text == " "{
             currentLetterCount += 1
-            print(currentLetterCount)
         }
         else if currentOrientation! {
             if currentButtonX == currentIntersectX! && !intersectionCounted! {
@@ -143,7 +142,6 @@ class ViewController: UIViewController {
             }
         }
         else{
-            print("check")
             invisTextField.resignFirstResponder()
             checkWord()
         }
@@ -178,7 +176,6 @@ class ViewController: UIViewController {
     func checkWord() {
         if grid.elementsEqual(board.grid, by: ==) {
             let newXY = board.nextBoard()
-            print(newXY)
             currentIntersectX = newXY.3
             currentIntersectY = newXY.4
             currentIntersectIndex = newXY.5
@@ -195,6 +192,7 @@ class ViewController: UIViewController {
         else {
             print("WRONG")
         }
+        print(grid)
     }
     func refreshBoard() {
         grid = board.grid
@@ -215,6 +213,21 @@ class ViewController: UIViewController {
                 }
                 if buttons[y][x]?.currentTitle != String(grid[y][x]) {
                     buttons[y][x]?.setTitle(" ", for: .normal)
+                }
+            }
+        }
+        print(currentWordX, currentWordY, currentWordLength)
+        for i in 0..<currentWordLength {
+            if currentOrientation! {
+                if currentWordX! + i != currentIntersectX {
+                    grid[currentWordY!][currentWordX! + i] = " "
+                    buttons[currentWordY!][currentWordX! + i]?.setTitle(" ", for: .normal)
+                }
+            }
+            else {
+                if currentWordY! + i != currentIntersectY {
+                    grid[currentWordY! + i][currentWordX!] = " "
+                    buttons[currentWordY! + i][currentWordX!]?.setTitle(" ", for: .normal)
                 }
             }
         }
