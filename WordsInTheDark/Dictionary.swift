@@ -33,14 +33,13 @@ class Dictionary {
             ("ALL", "Everything"),
             ("CAN", "Sealed aluminum cup"),
             ("KELP", "Seaweed"),
-            ("USE", "To utilize"),
+            ("USE", "Utilize"),
             ("JUNK" , "Garbage"),
             ("SHIN", "Below the knee"),
             ("KID", "Young person"),
             ("JOG", "Fast walk, slow run"),
             ("WAND", "Magic stick"),
             ("WEST", "Opposite of East"),
-            ("EAST", "Opposite of West"),
             ("QUIZ", "Test"),
             ("ZEN", "Relaxed"),
             ("FIZZ", "Bubbling or hissing"),
@@ -53,28 +52,42 @@ class Dictionary {
             ("HAPPY", "Cheerful mood"),
             ("SAD", "Feeling down"),
             ("BEE", "Insects that make honey"),
-            ("SWIM", "To propel self in water"),
+            ("SWIM", "Propel in water"),
             ("FIRE", "Hot hot hot"),
             ("WIND", "Breeze"),
+            ("EAST", "Opposite of West"),
             ("WATER", "Liquid"),
-            ("EYES", "Used for seeing"),
-            ("MOUTH", "Food hole"),
             ("WARM", "Sort of hot, sort of cold"),
             ("RAIN", "Water is falling from the sky"),
-            ("SUN", "Our big bright star"),
+            ("SUN", "Star"),
             ("CLOUD", "Puffs in the sky"),
             ("DOG", "Woof woof"),
-            ("CAT", "Kitty"),
-            ("BIRD", "Avian creature"),
+            ("FELINE", "Kitty"),
             ("AVIAN", "Bird"),
             ("HAT", "Headwear"),
-            ("GET", "To acquire")
+            ("QUICK", "Fast"),
+            ("QUEASY", "Nauseous"),
+            ("GRAY", "Light black"),
+            ("AQUA", "Water"),
+            ("WALTZ", "Ballroom dance"),
+            ("JEWEL", "Precious gem"),
+            ("WIZARD", "Mage"),
+            ("JUMBO", "Large"),
+            ("BOOTY", "Pirate's treasure"),
+            ("SEEK", "Find"),
+            ("SHRIMP", "Prawn"),
+            ("BISHOP", "Chess piece"),
+            ("ROOK", "Chess piece"),
+            ("KNIGHT", "Chess piece"),
+            ("CITRUS", "Oranges and lemons"),
+            ("FRUIT", "Apples and oranges")
         ]
     var recentlyUsed : [(String, String)] = []
     func getWord(letter: Character, orientation: Bool, X: Int, Y: Int) -> (String, String){
         return words[0]
     }
     func firstWord() -> (String, String){
+        words.shuffle()
         return words[Int.random(in: 0..<words.count)]
     }
     func pullWordFromDict(intersectLetter: Character, intersectX: Int, intersectY: Int, orientation: Bool) -> ((String, String)?, [String])?{
