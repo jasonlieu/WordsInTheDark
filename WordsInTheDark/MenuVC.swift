@@ -21,7 +21,7 @@ class MenuVC : UIViewController {
     @IBOutlet var K : UILabel!
     @IBOutlet var playButton : UIButton!
     func turnOn(){
-        UIView.animate(withDuration: 0.5, delay: 1, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.1, delay: 0.5, options: .curveEaseOut, animations: {
             self.W.alpha = 1
             self.O.alpha = 1
             self.R.alpha = 1
@@ -33,24 +33,80 @@ class MenuVC : UIViewController {
             self.R2.alpha = 1
             self.K.alpha = 1
             self.playButton.alpha = 1
-            self.lightLabel.alpha = 0.2
+            self.lightLabel.alpha = 0.05
+        }, completion: {
+            _ in
+            UIView.animate(withDuration: 0.05, delay: 0.05, options: .curveEaseOut, animations: {
+                self.W.alpha = 0
+                self.O.alpha = 0
+                self.R.alpha = 0
+                self.D.alpha = 0
+                self.S.alpha = 0
+                self.IN.alpha = 0
+                self.THE.alpha = 0
+                self.A.alpha = 0
+                self.R2.alpha = 0
+                self.K.alpha = 0
+                self.playButton.alpha = 0
+                self.lightLabel.alpha = 0
+            }, completion: {
+                _ in
+                UIView.animate(withDuration: 0.05, delay: 0.05, options: .curveEaseOut, animations: {
+                    self.W.alpha = 1
+                    self.O.alpha = 1
+                    self.R.alpha = 1
+                    self.D.alpha = 1
+                    self.S.alpha = 1
+                    self.IN.alpha = 1
+                    self.THE.alpha = 1
+                    self.A.alpha = 1
+                    self.R2.alpha = 1
+                    self.K.alpha = 1
+                    self.playButton.alpha = 1
+                    self.lightLabel.alpha = 0.05
+                }, completion: {
+                    _ in
+                    UIView.animate(withDuration: 0.1, delay: 0.05, options: .curveEaseOut, animations: {
+                        self.W.alpha = 0
+                        self.O.alpha = 0
+                        self.R.alpha = 0
+                        self.D.alpha = 0
+                        self.S.alpha = 0
+                        self.IN.alpha = 0
+                        self.THE.alpha = 0
+                        self.A.alpha = 0
+                        self.R2.alpha = 0
+                        self.K.alpha = 0
+                        self.playButton.alpha = 0
+                        self.lightLabel.alpha = 0
+                        self.playButton.isEnabled = true
+                    }, completion: {
+                        _ in
+                        UIView.animate(withDuration: 1.5, delay: 0.8, options: .curveEaseOut, animations: {
+                            self.W.alpha = 1
+                            self.O.alpha = 1
+                            self.R.alpha = 1
+                            self.D.alpha = 1
+                            self.S.alpha = 1
+                            self.IN.alpha = 1
+                            self.THE.alpha = 1
+                            self.A.alpha = 1
+                            self.R2.alpha = 1
+                            self.K.alpha = 1
+                            self.playButton.alpha = 1
+                            self.lightLabel.alpha = 0.1
+                        }, completion: {
+                            _ in
+                            UIView.animate(withDuration: 1.5, animations: {
+                                self.lightLabel.alpha = 0.2
+                            })
+                        })
+                    })
+                })
             })
-    }
-    /*func turnOff(){
-        UIView.animate(withDuration: 0.07, delay: 3, options: .curveEaseOut, animations: {
-            self.W.alpha = 0
-            self.O.alpha = 0
-            self.R.alpha = 0
-            self.D.alpha = 0
-            self.S.alpha = 0
-            self.IN.alpha = 0
-            self.THE.alpha = 0
-            self.A.alpha = 0
-            self.R2.alpha = 0
-            self.K.alpha = 0
-            self.lightLabel.alpha = 0
         })
-    }*/
+    }
+
 
     @IBOutlet var lightLabel : UILabel!
     override func viewDidLoad() {
@@ -79,13 +135,12 @@ class MenuVC : UIViewController {
         playButton.setTitle("P L A Y", for: .normal)
         playButton.setTitleColor(UIColor(displayP3Red: 70/255, green: 82/255, blue: 84/255, alpha: 1), for: .normal)
         playButton.alpha = 0
-
         lightLabel.alpha = 0
+        playButton.isEnabled = false
         view.backgroundColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
         lightLabel.transform = CGAffineTransform(rotationAngle: 45 * 3.14/180)
     }
     override func viewDidAppear(_ animated: Bool) {
         turnOn()
-        //turnOff()
     }
 }

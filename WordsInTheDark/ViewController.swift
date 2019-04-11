@@ -79,6 +79,12 @@ class ViewController: UIViewController {
     @IBOutlet var button67 : CustomButton!
     @IBOutlet var button68 : CustomButton!
     @IBOutlet var hintLabel : UILabel!
+    @IBOutlet var life1 : UIImageView!
+    @IBOutlet var life2 : UIImageView!
+    @IBOutlet var life3 : UIImageView!
+    @IBOutlet var life4 : UIImageView!
+    @IBOutlet var life5 : UIImageView!
+    var livesLeft : [UIImageView] = []
     var buttons : [[CustomButton?]] = []
     var grid : [[Character]] = []
     let invisTextField = UITextField(frame: CGRect.zero)
@@ -94,13 +100,24 @@ class ViewController: UIViewController {
     var currentIntersectY: Int?
     var currentIntersectIndex: Int?
     var intersectionCounted: Bool?
+    var error: Bool = false
+    var lives : Int!
 
     @IBAction func buttonPressed(_ sender: CustomButton){
-        currentButtonX = sender.X
-        currentButtonY = sender.Y
-        sender.borderWidth = 2
-        sender.borderColor = UIColor(displayP3Red: 1, green: 203/255, blue: 5/255, alpha: 1)
-        invisTextField.becomeFirstResponder()
+        if currentOrientation! && sender.Y == currentWordY {
+            currentButtonX = sender.X
+            currentButtonY = sender.Y
+            sender.borderWidth = 2
+            sender.borderColor = UIColor(displayP3Red: 1, green: 203/255, blue: 5/255, alpha: 1)
+            invisTextField.becomeFirstResponder()
+        }
+        else if !currentOrientation! && sender.X == currentWordX {
+            currentButtonX = sender.X
+            currentButtonY = sender.Y
+            sender.borderWidth = 2
+            sender.borderColor = UIColor(displayP3Red: 1, green: 203/255, blue: 5/255, alpha: 1)
+            invisTextField.becomeFirstResponder()
+        }
     }
     @IBAction func textFieldEditingDidChange( sender: UITextField){
         buttons[currentButtonY][currentButtonX]?.setTitle((invisTextField.text)?.uppercased(), for: .normal)
@@ -150,7 +167,7 @@ class ViewController: UIViewController {
         board.startGame()
         hintLabel.text = board.currentWord?.1
         currentWordLength = 0
-        currentLetterCount = 0
+        currentLetterCount = 1
         currentIntersectX = 0
         currentIntersectY = 0
         currentOrientation = board.currentOrientation
@@ -168,6 +185,8 @@ class ViewController: UIViewController {
                         currentWordY = y
                         currentButtonX = x
                         currentButtonY = y
+                        grid[currentWordY!][currentWordX!] = board.grid[y][x]
+                        buttons[y][x]?.setTitle(String(grid[y][x]), for: .normal)
                     }
                 }
             }
@@ -184,15 +203,30 @@ class ViewController: UIViewController {
             currentLetterCount = 0
             currentWordX = newXY.0
             currentWordY = newXY.1
+            error = false
             currentOrientation = !currentOrientation!
             intersectionCounted = false
             refreshBoard()
             buttonPressed(buttons[currentWordY!][currentWordX!]!)
         }
         else {
-            print("WRONG")
+            for y in 0...6{
+                for x in 0...8{
+                    if board.grid[y][x] != grid[y][x] {
+                        buttons[y][x]?.borderColor = UIColor.red
+                        if !error {
+                            error = true
+                            lives -= 1
+                            livesLeft[lives].alpha = 0
+                            if lives == 0 {
+                                print("GAMEOVER")
+                            }
+                        }
+                    }
+                }
+            }
         }
-        print(grid)
+        //print(grid)
     }
     func refreshBoard() {
         grid = board.grid
@@ -216,7 +250,6 @@ class ViewController: UIViewController {
                 }
             }
         }
-        print(currentWordX, currentWordY, currentWordLength)
         for i in 0..<currentWordLength {
             if currentOrientation! {
                 if currentWordX! + i != currentIntersectX {
@@ -256,6 +289,19 @@ class ViewController: UIViewController {
         ]
         currentButtonX = 0
         currentButtonY = 0
+        lives = 5
+        life1.image = UIImage(named: "remainingLife")
+        life2.image = UIImage(named: "remainingLife")
+        life3.image = UIImage(named: "remainingLife")
+        life4.image = UIImage(named: "remainingLife")
+        life5.image = UIImage(named: "remainingLife")
+        life1.alpha = 0.2
+        life2.alpha = 0.2
+        life3.alpha = 0.2
+        life4.alpha = 0.2
+        life5.alpha = 0.2
+
+        livesLeft = [life1, life2, life3, life4, life5]
         board = Generator()
         view.backgroundColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
         for i in 0...6{
@@ -271,7 +317,7 @@ class ViewController: UIViewController {
             }
         }
         startGame()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
             self.buttonPressed(self.buttons[self.currentButtonY][self.currentButtonX]!)
             })
     }

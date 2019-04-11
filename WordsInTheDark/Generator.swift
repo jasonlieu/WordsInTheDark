@@ -45,7 +45,7 @@ class Generator{
         currentWord = dictionary.firstWord()
         var insert : [Character] = []
         currentY = Int.random(in: 3...5)
-        currentX = Int.random(in: 1...3)
+        currentX = Int.random(in: 1...2)
         for _ in 0..<currentX{
             insert.append(" ")
         }

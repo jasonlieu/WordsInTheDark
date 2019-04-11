@@ -18,12 +18,29 @@ class FadeSegue: UIStoryboardSegue{
         destVC?.alpha = 0
         
         sourceVC?.addSubview(destVC!)
-        UIView.animate(withDuration: 1.5, animations: {
-            destVC?.alpha = 1
+        /*UIView.animate(withDuration: 1.5, animations: {
+            destVC?.alpha = 0
         }, completion: {
             _ in
-            self.source.present(self.destination, animated: false, completion: nil)
+            //self.source.present(self.destination, animated: false, completion: nil)
+            UIView.animate(withDuration: 1, animations: {
+                sourceVC?.alpha = 0
+            }, completion: {
+                _ in
+                UIView.animate(withDuration: 1, delay: 1, animations: {
+                    destVC?.alpha = 1
+                    self.source.present(self.destination, animated: false, completion: nil)
+                })
+            })
+        })*/
+        UIView.animate(withDuration: 1.5, animations: {
+            sourceVC?.alpha = 0
+        }, completion: {
+            _ in
+            UIView.animate(withDuration: 1, delay: 1, animations: {
+                destVC?.alpha = 1
+                self.source.present(self.destination, animated: false, completion: nil)
+            })
         })
-        
     }
 }
