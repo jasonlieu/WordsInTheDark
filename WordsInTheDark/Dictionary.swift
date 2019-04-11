@@ -11,9 +11,7 @@ import UIKit
 class Dictionary {
     var words : [(String, String)] =
         [   //cannot start with double letters
-            
             ("APPLE", "Red fruit"),
-            ("CUP", "Holds water"),
             ("COW", "Moo"),
             ("BOX", "Hollow cube"),
             ("GEM", "Precious stone"),
@@ -53,15 +51,13 @@ class Dictionary {
             ("SAD", "Feeling down"),
             ("BEE", "Insects that make honey"),
             ("SWIM", "Propel in water"),
-            ("FIRE", "Hot hot hot"),
             ("WIND", "Breeze"),
             ("EAST", "Opposite of West"),
-            ("WATER", "Liquid"),
-            ("WARM", "Sort of hot, sort of cold"),
+            ("WARM", "Hot and cold"),
             ("RAIN", "Water is falling from the sky"),
             ("SUN", "Star"),
             ("CLOUD", "Puffs in the sky"),
-            ("DOG", "Woof woof"),
+            ("PUPPY", "Young dog"),
             ("FELINE", "Kitty"),
             ("AVIAN", "Bird"),
             ("HAT", "Headwear"),
@@ -78,9 +74,20 @@ class Dictionary {
             ("SHRIMP", "Prawn"),
             ("BISHOP", "Chess piece"),
             ("ROOK", "Chess piece"),
-            ("KNIGHT", "Chess piece"),
             ("CITRUS", "Oranges and lemons"),
-            ("FRUIT", "Apples and oranges")
+            ("FRUIT", "Apples and oranges"),
+            ("QUEUE", "Waiting line"),
+            ("DELETE", "Backspace"),
+            ("OPTION", "Choice"),
+            ("PEPPER", "Salt and ______"),
+            ("PINKY", "Promise finger"),
+            ("ROCKET", "Spacecraft"),
+            ("LABOR", "Manual work"),
+            ("PIECE", "Part of a whole"),
+            ("LAUNCH", "Blast off"),
+            ("ALIEN", "Extraterrestrial"),
+            ("RIOT", "Public disturbance"),
+            ("PITCH", "Throw")
         ]
     var recentlyUsed : [(String, String)] = []
     func getWord(letter: Character, orientation: Bool, X: Int, Y: Int) -> (String, String){
