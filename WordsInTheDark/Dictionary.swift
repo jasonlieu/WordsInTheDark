@@ -87,15 +87,26 @@ class Dictionary {
             ("LAUNCH", "Blast off"),
             ("ALIEN", "Extraterrestrial"),
             ("RIOT", "Public disturbance"),
-            ("PITCH", "Throw")
+            ("PITCH", "Throw"),
+            ("GUILD", "Clan"),
+            ("ROUND", "No edges"),
+            ("LEMON", "Sour fruit"),
+            ("GRAPE", "Wine berry"),
+            ("GOOSE", "Waterfowl"),
+            ("NEXUS", "Center, focal point"),
+            ("NARK", "Tattletale"),
+            ("ARES", "Greek god of war")
         ]
     var recentlyUsed : [(String, String)] = []
-    func getWord(letter: Character, orientation: Bool, X: Int, Y: Int) -> (String, String){
-        return words[0]
+
+    func mixItUp(){
+        words.shuffle()
     }
     func firstWord() -> (String, String){
-        words.shuffle()
-        return words[Int.random(in: 0..<words.count)]
+        let index = Int.random(in: 0..<words.count)
+        let result = words[index]
+        words.remove(at: index)
+        return result
     }
     func pullWordFromDict(intersectLetter: Character, intersectX: Int, intersectY: Int, orientation: Bool) -> ((String, String)?, [String])?{
         if recentlyUsed.count > 4 {
@@ -107,14 +118,7 @@ class Dictionary {
                 let index = words.index {
                     $0 == current.0 && $1 == current.1
                 }
-                //let cut = current.0.components(separatedBy: String(intersectLetter))
                 let cut = splitWord(word: current.0, splitLetter: intersectLetter)
-                if cut.count == 1 {
-                    let singleCut = cut[0]
-                    if intersectLetter == singleCut[singleCut.index(singleCut.startIndex, offsetBy: 0)] {
-                        
-                    }
-                }
                 if orientation { // -
                     if intersectY - cut[0].count >= 0 && 6 - cut[1].count > intersectY {
                         words.remove(at: index!)
@@ -132,6 +136,9 @@ class Dictionary {
             }
         }
         return nil
+        //pass in a grid. check if current hits a used square
+        //if nil, do 3 more times, if still nil, trapped
+        //if trapped, back track one
     }
     func splitWord(word: String, splitLetter: Character) -> [String]{
         var result: [String] = ["" , ""]
@@ -149,5 +156,119 @@ class Dictionary {
             }
         }
         return result
+    }
+    
+    func standardGetWord(intersectLetter: Character, intersectX: Int, intersectY: Int, orientation: Bool, grid: [[StandardSquare]]) -> ((String, String), [String])? {
+        for current in words {
+            if current.0.count < 4 {
+                continue
+            }
+            if current.0.contains(intersectLetter){
+                let cut = splitWord(word: current.0, splitLetter: intersectLetter)
+                if orientation {
+                    if intersectY - cut[0].count >= 0 && 14 - cut[1].count > intersectY {
+                        let index = words.index {
+                            $0 == current.0 && $1 == current.1
+                        }
+                        words.remove(at: index!)
+                        
+                        //check if valid
+                        if !checkValid(intersectX: intersectX, intersectY: intersectY, cut: cut, grid: grid, orientation: orientation) {
+                            continue
+                        }
+                        return (current, cut)
+                    }
+                }
+                else {
+                    if intersectX - cut[0].count >= 1 && 14 - cut[1].count > intersectX {
+                        let index = words.index {
+                            $0 == current.0 && $1 == current.1
+                        }
+                        words.remove(at: index!)
+                        if !checkValid(intersectX: intersectX, intersectY: intersectY, cut: cut, grid: grid, orientation: orientation) {
+                            continue
+                        }
+                        return (current, cut)
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    func checkValid(intersectX: Int, intersectY: Int, cut: [String], grid: [[StandardSquare]], orientation: Bool) -> Bool {
+        let pre = cut[0]
+        let post = cut[1]
+        if orientation {
+            if intersectY - pre.count > 0 && grid[intersectY - pre.count - 1][intersectX].letter != " " && intersectY - pre.count > 0 && grid[intersectY - pre.count - 1][intersectX].letter != "-" {
+                return false
+            }
+            if intersectY + post.count < 14 && grid[intersectY + post.count + 1][intersectX].letter != " " && intersectY + post.count < 14 && grid[intersectY + post.count + 1][intersectX].letter != "-" {
+                return false
+            }
+            if pre.count > 0 {
+                for i in 1 ... pre.count{
+                    if grid[intersectY - (pre.count - i + 1)][intersectX].letter == "-" { //intersect with end of another word
+                        return false
+                    }
+                    /*if grid[intersectY - (pre.count - i + 1)][intersectX].horizontal != nil { //is intersecting
+                        if grid[intersectY - (pre.count - i + 1)][intersectX].letter != pre[pre.index(pre.startIndex, offsetBy: i - 1)] { //not same letter
+                            return false
+                        }
+                    }*/
+                    if grid[intersectY - (pre.count - i + 1)][intersectX].letter != pre[pre.index(pre.startIndex, offsetBy: i - 1)] { //not same letter
+                        return false
+                    }
+                }
+            }
+            if post.count > 0 {
+                for i in 1 ... post.count{
+                    if grid[intersectY + i][intersectX].letter == "-" {
+                        return false
+                    }
+                    if grid[intersectY + i][intersectX].horizontal != nil {
+                        if grid[intersectY + i][intersectX].letter != post[post.index(post.startIndex, offsetBy: i - 1)] {
+                            return false
+                        }
+                    }
+                }
+            }
+        }
+        else{
+            // check space before first letter, if is "-" or " "
+            if intersectX - pre.count > 0 && grid[intersectY][intersectX - pre.count - 1].letter != "-" && intersectX - pre.count > 0 && grid[intersectY][intersectX - pre.count - 1].letter != " " {
+                return false
+            }
+            if intersectX + post.count < 14 && grid[intersectY][intersectX + post.count + 1].letter != "-" && intersectX + post.count < 14 && grid[intersectY][intersectX + post.count + 1].letter != " " {
+                return false
+            }
+            if pre.count > 0 {
+                for i in 1 ... pre.count{
+                    if grid[intersectY][intersectX  - (pre.count - i + 1)].letter == "-" { //intersect with end of another word
+                        return false
+                    }
+                    /*if grid[intersectY][intersectX - (pre.count - i + 1)].vertical != nil { //is intersecting
+                        if grid[intersectY][intersectX - (pre.count - i + 1)].letter != pre[pre.index(pre.startIndex, offsetBy: i - 1)] { //not same letter
+                            return false
+                        }
+                    }*/
+                    if grid[intersectY][intersectX - (pre.count - i + 1)].letter != pre[pre.index(pre.startIndex, offsetBy: i - 1)] { //not same letter
+                        return false
+                    }
+                }
+            }
+            if post.count > 0 {
+                for i in 1 ... post.count{
+                    if grid[intersectY][intersectX + i].letter == "-" {
+                        return false
+                    }
+                    if grid[intersectY][intersectX + i].vertical != nil {
+                        if grid[intersectY][intersectX + i].letter != post[post.index(post.startIndex, offsetBy: i - 1)] {
+                            return false
+                        }
+                    }
+                }
+            }
+        }
+        return true
     }
 }

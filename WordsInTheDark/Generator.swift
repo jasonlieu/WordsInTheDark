@@ -42,6 +42,7 @@ class Generator{
     }
     func startGame(){
         // first word horizontal -
+        dictionary.mixItUp()
         currentWord = dictionary.firstWord()
         var insert : [Character] = []
         currentY = Int.random(in: 3...5)
