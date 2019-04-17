@@ -248,8 +248,9 @@ class StandardVC : UIViewController {
     @IBOutlet var bec : CustomButton!
     @IBOutlet var bed : CustomButton!
     @IBOutlet var bee : CustomButton!
-
     
+    @IBOutlet var hintLabel : UILabel!
+    let invisTextField = UITextField(frame: CGRect.zero)
     var buttons : [[CustomButton]]!
     let generator : StandardGenerator = StandardGenerator()
     var currentButtonX : Int = 0
@@ -271,37 +272,168 @@ class StandardVC : UIViewController {
         [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
         [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
     ]
+    var answerGrid : [[Character]] = [
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+    ]
+    
+    var currentWordLength : Int = 0
+    var currentLetterCount : Int = 0
+    var currentX : Int = 0
+    var currentY : Int = 0
+    var currentWord : (String, String) = (" "," ")
+    var currentOrientation : Bool = true
+    var intersectionCounted : Bool = false
+    var intersectIndex : (Int, Int)? = nil
+    func startGame(){
+        let first = generator.startGame()
+        for y in 0 ... 14 {
+            for x in 0 ... 14 {
+                answerGrid[y][x] = generator.grid[y][x].letter
+                if generator.grid[y][x].letter != "-" && generator.grid[y][x].letter != " "{
+                    buttons[y][x].backgroundColor = UIColor.white
+                    buttons[y][x].isEnabled = true
+                }
+            }
+        }
+        currentWord = first.0
+        currentWordLength = currentWord.0.count
+        currentX = first.1
+        currentY = first.2
+        currentButtonY = currentY
+        currentButtonX = currentX
+        hintLabel.text = currentWord.1
+        print(currentWord)
+    }
     @IBAction func buttonPressed(_ sender: CustomButton) {
         currentButtonX = sender.X
         currentButtonY = sender.Y
+        sender.borderWidth = 2
+        sender.borderColor = UIColor(displayP3Red: 1, green: 203/255, blue: 5/255, alpha: 1)
+        invisTextField.becomeFirstResponder()
     }
-    func startGame(){
-        generator.startGame()
-        for i in 0...7 {
-            grid[1][i] = generator.grid[1][i].letter
-            buttons[1][i].setTitle(String(grid[1][i]), for: .normal) //temp
-            if generator.grid[1][i].letter != "-" && generator.grid[1][i].letter != " "{
-                buttons[1][i].backgroundColor = UIColor.white
+    @IBAction func textFieldEditingDidChange( sender: UITextField){
+        buttons[currentButtonY][currentButtonX].setTitle((invisTextField.text)?.uppercased(), for: .normal)
+        buttons[currentButtonY][currentButtonX].borderWidth = 1
+        buttons[currentButtonY][currentButtonX].borderColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
+        if buttons[currentButtonY][currentButtonX].titleLabel?.text == " " {
+            currentLetterCount += 1
+        }
+        else if intersectIndex != nil {
+            if currentOrientation {
+                if intersectIndex!.0 == currentButtonX && !intersectionCounted { //y is needed
+                    intersectionCounted = true
+                    currentLetterCount += 1
+                }
+            }
+            else if !currentOrientation {
+                if intersectIndex!.1 == currentButtonY && !intersectionCounted {
+                    intersectionCounted = true
+                    currentLetterCount += 1
+                }
             }
         }
-    }
-    func check(){
+        //if another letter is intersecting, wont count
+        //array of counted X or Y, depending on orientation
         
+        
+        grid[currentButtonY][currentButtonX] = Character(invisTextField.text!.uppercased())
+        invisTextField.text = nil
+        if currentLetterCount < currentWordLength {
+            var canMoveToNext = true
+            if currentOrientation && currentButtonX < 14{
+                currentButtonX += 1
+                if currentButtonX >= currentX + currentWordLength {
+                    canMoveToNext = false
+                }
+            }
+            else if currentButtonY < 14{
+                currentButtonY += 1
+                if currentButtonY >= currentY + currentWordLength {
+                    canMoveToNext = false
+                }
+            }
+            if canMoveToNext {
+                buttonPressed(buttons[currentButtonY][currentButtonX])
+            }
+        }
+        else{
+            invisTextField.resignFirstResponder()
+            checkWord()
+        }
+    }
+    func checkWord(){
+        var correct : Bool = true
+        for y in 0...14{
+            for x in 0...14{
+                if answerGrid[y][x] == "-" || answerGrid[y][x] == " "{
+                    continue
+                }
+                if answerGrid[y][x] != grid[y][x] {
+                    correct = false
+                    buttons[y][x].borderColor = UIColor.red
+                }
+                else {
+                    buttons[y][x].borderColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
+                }
+            }
+        }
+        if correct {
+            nextBoard()
+            currentButtonX = currentX
+            currentButtonY = currentY
+            for y in 0 ... 14 {
+                for x in 0 ... 14 {
+                    answerGrid[y][x] = generator.grid[y][x].letter
+                    //buttons[y][x].setTitle(String(grid[y][x]), for: .normal) //TESTING ONLY
+                    if generator.grid[y][x].letter != "-" && generator.grid[y][x].letter != " "{
+                        buttons[y][x].backgroundColor = UIColor.white
+                        buttons[y][x].isEnabled = true
+                    }
+                }
+            }
+            buttonPressed(buttons[currentButtonY][currentButtonX])
+        }
     }
     func nextBoard(){
-        generator.nextBoard()
-        for y in 0 ... 14 {
-            for x in 0 ... 14 {
-                grid[y][x] = generator.grid[y][x].letter
-                buttons[y][x].setTitle(String(grid[y][x]), for: .normal)
+        let next = generator.nextBoard()
+        if next != nil {
+            intersectIndex = next?.3
+            currentX = next!.1
+            currentY = next!.2
+            currentWord = next!.0
+            currentOrientation = next!.4
+            currentWordLength = currentWord.0.count
+            currentLetterCount = 0
+            intersectionCounted = false
+            hintLabel.text = currentWord.1
+            for y in 0 ... 14 {
+                for x in 0 ... 14 {
+                    answerGrid[y][x] = generator.grid[y][x].letter
+                }
             }
         }
-    }
-    @IBAction func nextButtonTEST(){
-        nextBoard()
+        else {
+            print("out of moves")
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.addSubview(invisTextField)
+        invisTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: UIControl.Event.editingChanged)
         buttons = [
             [ b00, b01, b02, b03, b04, b05, b06, b07, b08, b09, b0a, b0b, b0c, b0d, b0e],
             [ b10, b11, b12, b13, b14, b15, b16, b17, b18, b19, b1a, b1b, b1c, b1d, b1e],
@@ -321,16 +453,22 @@ class StandardVC : UIViewController {
 
         ]
         view.backgroundColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
+        hintLabel.textColor = UIColor.white
         for y in 0 ... 14 {
             for x in 0 ... 14 {
                 buttons[y][x].setTitle(" ", for: .normal)
-                buttons[y][x].backgroundColor = UIColor(displayP3Red: 69/255, green: 72/255, blue: 72/255, alpha: 1)
+                //buttons[y][x].backgroundColor = UIColor(displayP3Red: 69/255, green: 72/255, blue: 72/255, alpha: 1)
+                buttons[y][x].backgroundColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
                 buttons[y][x].borderColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
                 buttons[y][x].borderWidth = 1
                 buttons[y][x].X = x
                 buttons[y][x].Y = y
+                buttons[y][x].isEnabled = false
             }
         }
         startGame()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+            self.buttonPressed(self.buttons[self.currentButtonY][self.currentButtonX])
+        })
     }
 }

@@ -95,7 +95,8 @@ class Dictionary {
             ("GOOSE", "Waterfowl"),
             ("NEXUS", "Center, focal point"),
             ("NARK", "Tattletale"),
-            ("ARES", "Greek god of war")
+            ("ARES", "Greek god of war"),
+            ("MESO", "____potamia, land between two rivers")
         ]
     var recentlyUsed : [(String, String)] = []
 
@@ -157,7 +158,6 @@ class Dictionary {
         }
         return result
     }
-    
     func standardGetWord(intersectLetter: Character, intersectX: Int, intersectY: Int, orientation: Bool, grid: [[StandardSquare]]) -> ((String, String), [String])? {
         for current in words {
             if current.0.count < 4 {
@@ -170,12 +170,10 @@ class Dictionary {
                         let index = words.index {
                             $0 == current.0 && $1 == current.1
                         }
-                        words.remove(at: index!)
-                        
-                        //check if valid
                         if !checkValid(intersectX: intersectX, intersectY: intersectY, cut: cut, grid: grid, orientation: orientation) {
                             continue
                         }
+                        words.remove(at: index!)
                         return (current, cut)
                     }
                 }
@@ -184,10 +182,10 @@ class Dictionary {
                         let index = words.index {
                             $0 == current.0 && $1 == current.1
                         }
-                        words.remove(at: index!)
                         if !checkValid(intersectX: intersectX, intersectY: intersectY, cut: cut, grid: grid, orientation: orientation) {
                             continue
                         }
+                        words.remove(at: index!)
                         return (current, cut)
                     }
                 }
@@ -210,13 +208,10 @@ class Dictionary {
                     if grid[intersectY - (pre.count - i + 1)][intersectX].letter == "-" { //intersect with end of another word
                         return false
                     }
-                    /*if grid[intersectY - (pre.count - i + 1)][intersectX].horizontal != nil { //is intersecting
+                    if grid[intersectY - (pre.count - i + 1)][intersectX].horizontal != nil { //is intersecting
                         if grid[intersectY - (pre.count - i + 1)][intersectX].letter != pre[pre.index(pre.startIndex, offsetBy: i - 1)] { //not same letter
                             return false
                         }
-                    }*/
-                    if grid[intersectY - (pre.count - i + 1)][intersectX].letter != pre[pre.index(pre.startIndex, offsetBy: i - 1)] { //not same letter
-                        return false
                     }
                 }
             }
@@ -246,14 +241,14 @@ class Dictionary {
                     if grid[intersectY][intersectX  - (pre.count - i + 1)].letter == "-" { //intersect with end of another word
                         return false
                     }
-                    /*if grid[intersectY][intersectX - (pre.count - i + 1)].vertical != nil { //is intersecting
+                    if grid[intersectY][intersectX - (pre.count - i + 1)].vertical != nil { //is intersecting
                         if grid[intersectY][intersectX - (pre.count - i + 1)].letter != pre[pre.index(pre.startIndex, offsetBy: i - 1)] { //not same letter
                             return false
                         }
-                    }*/
-                    if grid[intersectY][intersectX - (pre.count - i + 1)].letter != pre[pre.index(pre.startIndex, offsetBy: i - 1)] { //not same letter
-                        return false
                     }
+                    /*if grid[intersectY][intersectX - (pre.count - i + 1)].letter != pre[pre.index(pre.startIndex, offsetBy: i - 1)] { //not same letter
+                        return false
+                    }*/
                 }
             }
             if post.count > 0 {

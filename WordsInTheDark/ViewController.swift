@@ -226,7 +226,6 @@ class ViewController: UIViewController {
                 }
             }
         }
-        //print(grid)
     }
     func refreshBoard() {
         grid = board.grid

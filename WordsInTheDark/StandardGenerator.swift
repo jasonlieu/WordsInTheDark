@@ -15,8 +15,9 @@ class StandardGenerator {
     var currentX : Int = 1
     var currentY : Int = 1
     var currentOrientation : Bool = true
+    var intersectXY : (Int, Int) = (0,0)
     var grid : [[StandardSquare]] = (0...14).map { _ in (0...14).map { _ in StandardSquare() } }
-    func startGame(){
+    func startGame() -> ((String, String), Int, Int) { //(word, hint) X Y
         dictionary.mixItUp()
         currentWord = dictionary.firstWord()
         while currentWord.0.count < 4 {
@@ -33,54 +34,47 @@ class StandardGenerator {
         }
         grid[currentY][currentX + index].letter = "-"
         wordHistory.insert((currentWord, currentX, currentY, currentOrientation), at: 0)
+        return (currentWord, currentX, currentY)
     }
-    func nextBoard(){
+    func nextBoard() -> ((String, String), Int, Int, (Int, Int), Bool)?{ //(word,hint) X Y intersectInt orientation
         var pass : Bool =  nextBoardAlg(word: currentWord, x: currentX, y: currentY)
-        print(currentOrientation)
         while !pass {
             if wordHistory.count == 0 {
                 gameOver()
-                return
+                return nil
             }
             else {
                 currentWord = wordHistory[0].0
                 currentX = wordHistory[0].1
                 currentY = wordHistory[0].2
                 currentOrientation = wordHistory[0].3
-                print("backtrack cW: ", currentWord, "cX: ", currentX, "cY:",currentY)
             }
             pass = nextBoardAlg(word: currentWord, x: currentX, y: currentY)
             wordHistory.remove(at: 0)
         }
         currentOrientation = !currentOrientation
         wordHistory.insert((currentWord, currentX, currentY, currentOrientation), at: 0)
-        print(wordHistory)
-        print("cW: ", currentWord, "cX: ", currentX, "cY:",currentY)
+        return (currentWord, currentX, currentY, intersectXY, currentOrientation)
     }
-    func nextBoardAlg(word: (String, String), x: Int, y: Int) -> Bool {
+    func nextBoardAlg(word: (String, String), x: Int, y: Int) -> Bool { // interX, interY
         var intersectIndex = Int.random(in: 0...1)
         var nextWord : ((String, String), [String])? = nil
-        print(intersectIndex)
         while nextWord == nil {
             if currentOrientation {
                 var eligible : Bool = false
                 while !eligible {
                     if grid[currentY][currentX + intersectIndex].vertical != nil { //chosen index is already intersection
                         intersectIndex += 2
-                        print("-1",intersectIndex)
                     }
                     else if currentX + intersectIndex > 0 && grid[currentY][currentX + intersectIndex - 1].vertical != nil { //has int on left
                         intersectIndex += 1
-                        print("-2", intersectIndex)
                     }
                     else if currentX + intersectIndex < 14 && grid[currentY][currentX + intersectIndex + 1].vertical != nil { //has int on right
                         intersectIndex += 3
-                        print("-3", intersectIndex)
                     }
                     else { eligible = true }
                     
                     if intersectIndex >= grid[currentY][currentX].horizontal!.2 { //intersectIndex passed word length
-                        print("nextBoardAlg - false")
                         return false
                     }
                 }
@@ -92,20 +86,15 @@ class StandardGenerator {
                 while !eligible {
                     if grid[currentY + intersectIndex][currentX].horizontal != nil {
                         intersectIndex += 2
-                        print("|1",  intersectIndex)
                     }
                     else if currentY + intersectIndex > 0 && grid[currentY + intersectIndex - 1][currentX].horizontal != nil {
                         intersectIndex += 1
-                        print("|2",intersectIndex)
                     }
                     else if currentY + intersectIndex < 14 && grid[currentY + intersectIndex + 1][currentX].horizontal != nil {
                         intersectIndex += 3
-                        print("|3",intersectIndex)
                     }
                     else { eligible = true }
-                    print("|", intersectIndex, grid[currentY][currentX].vertical!.2)
                     if intersectIndex >= grid[currentY][currentX].vertical!.2 {
-                        print("nextBoardAlg | false")
                         return false
                     }
                 }
@@ -113,7 +102,6 @@ class StandardGenerator {
                 nextWord = dictionary.standardGetWord(intersectLetter: intersect, intersectX: currentX, intersectY: currentY + intersectIndex, orientation: currentOrientation, grid: grid)
             }
             if nextWord == nil {
-                print("nextWord is nil")
                 intersectIndex += 1
                 
             }
@@ -126,7 +114,6 @@ class StandardGenerator {
         let pre = cut[0]
         let post = cut[1]
         if currentOrientation { //new word is |
-            print("insert vertical")
             if currentY - pre.count > 0 {
                 grid[currentY - pre.count - 1][currentX + intersectIndex].letter = "-"
             }
@@ -148,7 +135,6 @@ class StandardGenerator {
             }
         }
         else {
-            print("insert horizontal")
             if currentX - pre.count > 0 {
                 grid[currentY + intersectIndex][currentX - pre.count - 1].letter = "-"
             }
@@ -171,11 +157,13 @@ class StandardGenerator {
         }
         if currentOrientation {
             currentX += intersectIndex
+            intersectXY = (currentX, currentY)
             currentY -= pre.count
         }
         else {
-            currentX -= pre.count
             currentY += intersectIndex
+            intersectXY = (currentX, currentY)
+            currentX -= pre.count
         }
     }
     func gameOver(){

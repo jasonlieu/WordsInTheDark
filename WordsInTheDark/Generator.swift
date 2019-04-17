@@ -40,7 +40,7 @@ class Generator{
         currentX = 0
         currentY = 0
     }
-    func startGame(){
+    func startGame() { 
         // first word horizontal -
         dictionary.mixItUp()
         currentWord = dictionary.firstWord()

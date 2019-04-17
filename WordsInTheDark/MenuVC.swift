@@ -19,7 +19,8 @@ class MenuVC : UIViewController {
     @IBOutlet var A : UILabel!
     @IBOutlet var R2 : UILabel!
     @IBOutlet var K : UILabel!
-    @IBOutlet var playButton : UIButton!
+    @IBOutlet var endlessButton : UIButton!
+    @IBOutlet var standardButton : UIButton!
     func turnOn(){
         UIView.animate(withDuration: 0.1, delay: 0.5, options: .curveEaseOut, animations: {
             self.W.alpha = 1
@@ -32,7 +33,8 @@ class MenuVC : UIViewController {
             self.A.alpha = 1
             self.R2.alpha = 1
             self.K.alpha = 1
-            self.playButton.alpha = 1
+            self.endlessButton.alpha = 1
+            self.standardButton.alpha = 1
             self.lightLabel.alpha = 0.05
         }, completion: {
             _ in
@@ -47,7 +49,8 @@ class MenuVC : UIViewController {
                 self.A.alpha = 0
                 self.R2.alpha = 0
                 self.K.alpha = 0
-                self.playButton.alpha = 0
+                self.endlessButton.alpha = 0
+                self.standardButton.alpha = 0
                 self.lightLabel.alpha = 0
             }, completion: {
                 _ in
@@ -62,7 +65,8 @@ class MenuVC : UIViewController {
                     self.A.alpha = 1
                     self.R2.alpha = 1
                     self.K.alpha = 1
-                    self.playButton.alpha = 1
+                    self.endlessButton.alpha = 1
+                    self.standardButton.alpha = 1
                     self.lightLabel.alpha = 0.05
                 }, completion: {
                     _ in
@@ -77,9 +81,11 @@ class MenuVC : UIViewController {
                         self.A.alpha = 0
                         self.R2.alpha = 0
                         self.K.alpha = 0
-                        self.playButton.alpha = 0
+                        self.endlessButton.alpha = 0
+                        self.standardButton.alpha = 0
                         self.lightLabel.alpha = 0
-                        self.playButton.isEnabled = true
+                        self.endlessButton.isEnabled = true
+                        self.standardButton.isEnabled = true
                     }, completion: {
                         _ in
                         UIView.animate(withDuration: 1.5, delay: 0.8, options: .curveEaseOut, animations: {
@@ -93,7 +99,8 @@ class MenuVC : UIViewController {
                             self.A.alpha = 1
                             self.R2.alpha = 1
                             self.K.alpha = 1
-                            self.playButton.alpha = 1
+                            self.endlessButton.alpha = 1
+                            self.standardButton.alpha = 1
                             self.lightLabel.alpha = 0.1
                         }, completion: {
                             _ in
@@ -132,11 +139,15 @@ class MenuVC : UIViewController {
         A.alpha = 0
         R2.alpha = 0
         K.alpha = 0
-        playButton.setTitle("P L A Y", for: .normal)
-        playButton.setTitleColor(UIColor(displayP3Red: 70/255, green: 82/255, blue: 84/255, alpha: 1), for: .normal)
-        playButton.alpha = 0
+        endlessButton.setTitle("E N D L E S S", for: .normal)
+        standardButton.setTitle("S T A N D A R D", for: .normal)
+        endlessButton.setTitleColor(UIColor(displayP3Red: 70/255, green: 82/255, blue: 84/255, alpha: 1), for: .normal)
+        standardButton.setTitleColor(UIColor(displayP3Red: 70/255, green: 82/255, blue: 84/255, alpha: 1), for: .normal)
+        endlessButton.alpha = 0
+        standardButton.alpha = 0
         lightLabel.alpha = 0
-        playButton.isEnabled = false
+        endlessButton.isEnabled = false
+        standardButton.isEnabled = false
         view.backgroundColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
         lightLabel.transform = CGAffineTransform(rotationAngle: 45 * 3.14/180)
     }
