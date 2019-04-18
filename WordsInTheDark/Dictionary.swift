@@ -213,6 +213,16 @@ class Dictionary {
                             return false
                         }
                     }
+                    else {  //not intersection
+                        if intersectX > 0 && (grid[intersectY - (pre.count - i + 1)][intersectX - 1].letter != " " &&
+                            grid[intersectY - (pre.count - i + 1)][intersectX - 1].letter != "-") {
+                            return false //next to another word, left
+                        }
+                        if intersectX < 14 && (grid[intersectY - (pre.count - i + 1)][intersectX + 1].letter != " " &&
+                            grid[intersectY - (pre.count - i + 1)][intersectX + 1].letter != "-") {
+                            return false //next to another word, right
+                        }
+                    }
                 }
             }
             if post.count > 0 {
@@ -223,6 +233,16 @@ class Dictionary {
                     if grid[intersectY + i][intersectX].horizontal != nil {
                         if grid[intersectY + i][intersectX].letter != post[post.index(post.startIndex, offsetBy: i - 1)] {
                             return false
+                        }
+                    }
+                    else {  //not intersection
+                        if intersectX > 0 && (grid[intersectY + i][intersectX - 1].letter != " " &&
+                            grid[intersectY + i][intersectX - 1].letter != "-") {
+                            return false //next to another word, left
+                        }
+                        if intersectX < 14 && (grid[intersectY + i][intersectX + 1].letter != " " &&
+                            grid[intersectY + i][intersectX + 1].letter != "-") {
+                            return false //next to another word, right
                         }
                     }
                 }
@@ -246,9 +266,16 @@ class Dictionary {
                             return false
                         }
                     }
-                    /*if grid[intersectY][intersectX - (pre.count - i + 1)].letter != pre[pre.index(pre.startIndex, offsetBy: i - 1)] { //not same letter
-                        return false
-                    }*/
+                    else {
+                        if intersectY > 0 && (grid[intersectY - 1][intersectX  - (pre.count - i + 1)].letter != "-" &&
+                            grid[intersectY - 1][intersectX  - (pre.count - i + 1)].letter != " "){
+                            return false
+                        }
+                        if intersectY > 14 && (grid[intersectY + 1][intersectX  - (pre.count - i + 1)].letter != "-" &&
+                            grid[intersectY + 1][intersectX  - (pre.count - i + 1)].letter != " "){
+                            return false
+                        }
+                    }
                 }
             }
             if post.count > 0 {
@@ -261,6 +288,17 @@ class Dictionary {
                             return false
                         }
                     }
+                    else {
+                        if intersectY > 0 && (grid[intersectY - 1][intersectX + i].letter != "-" &&
+                            grid[intersectY - 1][intersectX + i].letter != " "){
+                            return false
+                        }
+                        if intersectY > 14 && (grid[intersectY + 1][intersectX + i].letter != "-" &&
+                            grid[intersectY + 1][intersectX + i].letter != " "){
+                            return false
+                        }
+                    }
+
                 }
             }
         }

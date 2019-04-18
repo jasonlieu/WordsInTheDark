@@ -298,6 +298,8 @@ class StandardVC : UIViewController {
     var currentOrientation : Bool = true
     var intersectionCounted : Bool = false
     var intersectIndex : (Int, Int)? = nil
+    var buttonHistory : [(Int, Int)] = []
+    var gameOver : Bool = false
     func startGame(){
         let first = generator.startGame()
         for y in 0 ... 14 {
@@ -329,7 +331,7 @@ class StandardVC : UIViewController {
         buttons[currentButtonY][currentButtonX].setTitle((invisTextField.text)?.uppercased(), for: .normal)
         buttons[currentButtonY][currentButtonX].borderWidth = 1
         buttons[currentButtonY][currentButtonX].borderColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
-        if buttons[currentButtonY][currentButtonX].titleLabel?.text == " " {
+        /*if buttons[currentButtonY][currentButtonX].titleLabel?.text == " " {
             currentLetterCount += 1
         }
         else if intersectIndex != nil {
@@ -345,11 +347,29 @@ class StandardVC : UIViewController {
                     currentLetterCount += 1
                 }
             }
-        }
+        }*/
         //if another letter is intersecting, wont count
-        //array of counted X or Y, depending on orientation
-        
-        
+        //array of counted X or Y, depending on orientation*
+        if currentOrientation {
+            if currentY == currentButtonY { //correct Y
+                if currentX <= currentButtonX  && currentButtonX <= currentX + currentWordLength - 1 { //X in range
+                    if !buttonHistory.contains(where: {$0.0 == currentButtonX && $0.1 == currentButtonY }){ // not in history, add +1
+                        buttonHistory.append((currentButtonX, currentButtonY))
+                        currentLetterCount += 1
+                    }
+                }
+            }
+        }
+        else {
+            if currentX == currentButtonX {
+                if currentY <= currentButtonY && currentButtonY <= currentY + currentWordLength - 1 {
+                    if !buttonHistory.contains(where: {$0.0 == currentButtonX && $0.1 == currentButtonY }){
+                        buttonHistory.append((currentButtonX, currentButtonY))
+                        currentLetterCount += 1
+                    }
+                }
+            }
+        }
         grid[currentButtonY][currentButtonX] = Character(invisTextField.text!.uppercased())
         invisTextField.text = nil
         if currentLetterCount < currentWordLength {
@@ -405,7 +425,7 @@ class StandardVC : UIViewController {
                     }
                 }
             }
-            buttonPressed(buttons[currentButtonY][currentButtonX])
+            if !gameOver { buttonPressed(buttons[currentButtonY][currentButtonX]) }
         }
     }
     func nextBoard(){
@@ -420,6 +440,7 @@ class StandardVC : UIViewController {
             currentLetterCount = 0
             intersectionCounted = false
             hintLabel.text = currentWord.1
+            buttonHistory = []
             for y in 0 ... 14 {
                 for x in 0 ... 14 {
                     answerGrid[y][x] = generator.grid[y][x].letter
@@ -427,7 +448,9 @@ class StandardVC : UIViewController {
             }
         }
         else {
-            print("out of moves")
+            print("out of words")
+            gameOver = true
+            invisTextField.resignFirstResponder()
         }
     }
     override func viewDidLoad() {
