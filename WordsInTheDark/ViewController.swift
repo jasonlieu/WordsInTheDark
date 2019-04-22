@@ -110,6 +110,8 @@ class ViewController: UIViewController {
 
     @IBAction func buttonPressed(_ sender: CustomButton){
         if currentOrientation! && sender.Y == currentWordY {
+            buttons[currentButtonY][currentButtonX]?.borderWidth = 1
+            buttons[currentButtonY][currentButtonX]?.borderColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
             currentButtonX = sender.X
             currentButtonY = sender.Y
             sender.borderWidth = 2
@@ -117,6 +119,8 @@ class ViewController: UIViewController {
             invisTextField.becomeFirstResponder()
         }
         else if !currentOrientation! && sender.X == currentWordX {
+            buttons[currentButtonY][currentButtonX]?.borderWidth = 1
+            buttons[currentButtonY][currentButtonX]?.borderColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
             currentButtonX = sender.X
             currentButtonY = sender.Y
             sender.borderWidth = 2
