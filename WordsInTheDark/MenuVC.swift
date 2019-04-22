@@ -21,6 +21,24 @@ class MenuVC : UIViewController {
     @IBOutlet var K : UILabel!
     @IBOutlet var endlessButton : UIButton!
     @IBOutlet var standardButton : UIButton!
+    @IBOutlet var lightLabel : UILabel!
+    
+    @IBAction func standard(_ sender: UIButton){
+        UIView.animate(withDuration: 1.5, animations: {
+            self.view.alpha = 0
+        }, completion: {
+            _ in
+            self.performSegue(withIdentifier: "toStandard", sender: self)
+        })
+    }
+    @IBAction func endless(_ sender: UIButton){
+        UIView.animate(withDuration: 1.5, animations: {
+            self.view.alpha = 0
+        }, completion: {
+            _ in
+            self.performSegue(withIdentifier: "toEndless", sender: self)
+        })
+    }
     func turnOn(){
         UIView.animate(withDuration: 0.1, delay: 0.5, options: .curveEaseOut, animations: {
             self.W.alpha = 1
@@ -113,9 +131,30 @@ class MenuVC : UIViewController {
             })
         })
     }
-
-
-    @IBOutlet var lightLabel : UILabel!
+    func noFlash(){
+        standardButton.isEnabled = true
+        endlessButton.isEnabled = true
+        UIView.animate(withDuration: 1.5, delay: 0.8, options: .curveEaseOut, animations: {
+            self.W.alpha = 1
+            self.O.alpha = 1
+            self.R.alpha = 1
+            self.D.alpha = 1
+            self.S.alpha = 1
+            self.IN.alpha = 1
+            self.THE.alpha = 1
+            self.A.alpha = 1
+            self.R2.alpha = 1
+            self.K.alpha = 1
+            self.endlessButton.alpha = 1
+            self.standardButton.alpha = 1
+            self.lightLabel.alpha = 0.1
+        }, completion: {
+            _ in
+            UIView.animate(withDuration: 1.5, animations: {
+                self.lightLabel.alpha = 0.2
+            })
+        })
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         W.textColor = UIColor(displayP3Red: 60/255, green: 72/255, blue: 74/255, alpha: 1)
@@ -152,6 +191,13 @@ class MenuVC : UIViewController {
         lightLabel.transform = CGAffineTransform(rotationAngle: 45 * 3.14/180)
     }
     override func viewDidAppear(_ animated: Bool) {
-        turnOn()
+        view.alpha = 0
+        UIView.animate(withDuration: 1, animations: {
+            self.view.alpha = 1
+        }, completion:  {
+            _ in
+            self.noFlash()
+        })
+        
     }
 }

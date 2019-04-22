@@ -79,11 +79,16 @@ class ViewController: UIViewController {
     @IBOutlet var button67 : CustomButton!
     @IBOutlet var button68 : CustomButton!
     @IBOutlet var hintLabel : UILabel!
+    @IBOutlet var backdropLabel : UILabel!
     @IBOutlet var life1 : UIImageView!
     @IBOutlet var life2 : UIImageView!
     @IBOutlet var life3 : UIImageView!
     @IBOutlet var life4 : UIImageView!
     @IBOutlet var life5 : UIImageView!
+    @IBOutlet var backButton: UIButton!
+    @IBOutlet var endLabel : UILabel!
+    @IBOutlet var againButton : UIButton!
+    @IBOutlet var notAgainButton : UIButton!
     var livesLeft : [UIImageView] = []
     var buttons : [[CustomButton?]] = []
     var grid : [[Character]] = []
@@ -165,6 +170,7 @@ class ViewController: UIViewController {
     }
     func startGame(){
         board.startGame()
+        lives = 5
         hintLabel.text = board.currentWord?.1
         currentWordLength = 0
         currentLetterCount = 1
@@ -219,7 +225,19 @@ class ViewController: UIViewController {
                             lives -= 1
                             livesLeft[lives].alpha = 0
                             if lives == 0 {
-                                print("GAMEOVER")
+                                invisTextField.resignFirstResponder()
+                                UIView.animate(withDuration: 0.5, delay: 0.8, options: .curveEaseOut, animations: {
+                                    self.endLabel.alpha = 1
+                                    self.againButton.alpha = 1
+                                    self.notAgainButton.alpha = 1
+                                    self.hintLabel.alpha = 0
+                                })
+                                for y in 0...6{
+                                    for x in 0...8{
+                                        buttons[y][x]?.isEnabled = false
+                                    }
+                                    
+                                }
                             }
                         }
                     }
@@ -264,6 +282,52 @@ class ViewController: UIViewController {
             }
         }
     }
+    @IBAction func reset(_ sender: UIButton){
+        grid = [
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+        ]
+        board = Generator()
+        currentWordX = nil
+        currentWordY = nil
+        for i in 0...6{
+            for j in 0...8 {
+                buttons[i][j]?.setTitle(" ", for: .normal)
+                buttons[i][j]?.borderColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
+                buttons[i][j]?.borderWidth = 1
+                buttons[i][j]?.backgroundColor = UIColor.white
+                buttons[i][j]?.isEnabled = true
+            }
+        }
+        UIView.animate(withDuration: 0.5, delay: 0.8, options: .curveEaseOut, animations: {
+            self.endLabel.alpha = 0
+            self.againButton.alpha = 0
+            self.notAgainButton.alpha = 0
+            self.hintLabel.alpha = 1
+            self.life1.alpha = 0.2
+            self.life2.alpha = 0.2
+            self.life3.alpha = 0.2
+            self.life4.alpha = 0.2
+            self.life5.alpha = 0.2
+        })
+        startGame()
+        buttonPressed(buttons[currentButtonY][currentButtonX]!)
+
+    }
+    @IBAction func backButton(_ sender: UIButton){
+        invisTextField.resignFirstResponder()
+        UIView.animate(withDuration: 1.5, animations: {
+            self.view.alpha = 0
+        }, completion: {
+            _ in
+            self.performSegue(withIdentifier: "toMenu", sender: self)
+        })
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(invisTextField)
@@ -288,7 +352,6 @@ class ViewController: UIViewController {
         ]
         currentButtonX = 0
         currentButtonY = 0
-        lives = 5
         life1.image = UIImage(named: "remainingLife")
         life2.image = UIImage(named: "remainingLife")
         life3.image = UIImage(named: "remainingLife")
@@ -315,10 +378,28 @@ class ViewController: UIViewController {
                 buttons[i][j]?.isEnabled = true
             }
         }
+        view.alpha = 0
+        backButton.setTitleColor(UIColor(displayP3Red: 1, green: 203/255, blue: 5/255, alpha: 1), for: .normal)
+        backButton.setTitle("back", for: .normal)
+        backdropLabel.text = ""
+        backdropLabel.backgroundColor = UIColor(displayP3Red: 50/255, green: 62/255, blue: 64/255, alpha: 1)
+        endLabel.alpha = 0
+        endLabel.text = "Want to go again?"
+        endLabel.textColor = UIColor.white
+        againButton.alpha = 0
+        againButton.setTitleColor(UIColor(displayP3Red: 1, green: 203/255, blue: 5/255, alpha: 1), for: .normal)
+        notAgainButton.alpha = 0
+        notAgainButton.setTitleColor(UIColor(displayP3Red: 1, green: 203/255, blue: 5/255, alpha: 1), for: .normal)
         startGame()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        UIView.animate(withDuration: 1.5, animations: {
+            self.view.alpha = 1
+        }, completion: {
+            _ in
             self.buttonPressed(self.buttons[self.currentButtonY][self.currentButtonX]!)
-            })
+        })
     }
 }
 

@@ -249,7 +249,15 @@ class StandardVC : UIViewController {
     @IBOutlet var bed : CustomButton!
     @IBOutlet var bee : CustomButton!
     
+    @IBOutlet var resetButton : UIButton!
+    @IBOutlet var resetYES : UIButton!
+    @IBOutlet var resetNO : UIButton!
     @IBOutlet var hintLabel : UILabel!
+    @IBOutlet var endLabel : UILabel!
+    @IBOutlet var againButton : UIButton!
+    @IBOutlet var notAgainButton : UIButton!
+    @IBOutlet var backButton : UIButton!
+    @IBOutlet var backdropLabel : UILabel!
     let invisTextField = UITextField(frame: CGRect.zero)
     var buttons : [[CustomButton]]!
     let generator : StandardGenerator = StandardGenerator()
@@ -289,7 +297,7 @@ class StandardVC : UIViewController {
         [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
         [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
     ]
-    
+    let endPhrases : [String] = ["That was short. Again?", "Want to go again?"]
     var currentWordLength : Int = 0
     var currentLetterCount : Int = 0
     var currentX : Int = 0
@@ -300,6 +308,7 @@ class StandardVC : UIViewController {
     var intersectIndex : (Int, Int)? = nil
     var buttonHistory : [(Int, Int)] = []
     var gameOver : Bool = false
+    var wordCount : Int = 0
     func startGame(){
         let first = generator.startGame()
         for y in 0 ... 14 {
@@ -318,6 +327,7 @@ class StandardVC : UIViewController {
         currentButtonY = currentY
         currentButtonX = currentX
         hintLabel.text = currentWord.1
+        wordCount = 1
         print(currentWord)
     }
     @IBAction func buttonPressed(_ sender: CustomButton) {
@@ -441,6 +451,7 @@ class StandardVC : UIViewController {
             intersectionCounted = false
             hintLabel.text = currentWord.1
             buttonHistory = []
+            wordCount += 1
             for y in 0 ... 14 {
                 for x in 0 ... 14 {
                     answerGrid[y][x] = generator.grid[y][x].letter
@@ -448,10 +459,139 @@ class StandardVC : UIViewController {
             }
         }
         else {
-            print("out of words")
             gameOver = true
             invisTextField.resignFirstResponder()
+            if wordCount < 7 {
+                endLabel.text = endPhrases[0]
+            }
+            else {
+                endLabel.text = endPhrases[1]
+            }
+            againButton.isEnabled = true
+            notAgainButton.isEnabled = true
+            resetButton.isEnabled = false
+            UIView.animate(withDuration: 0.5, delay: 0.8, options: .curveEaseOut, animations: {
+                self.endLabel.alpha = 1
+                self.againButton.alpha = 1
+                self.notAgainButton.alpha = 1
+                self.hintLabel.alpha = 0
+                self.resetButton.alpha = 0
+            })
         }
+    }
+    @IBAction func resetButton(_ sender: UIButton){
+        hintLabel.text = "Are you sure you want to reset?"
+        resetButton.isEnabled = false
+        resetYES.isEnabled = true
+        resetNO.isEnabled = true
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+            self.resetButton.alpha = 0
+        }, completion: {
+            _ in
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                self.resetYES.alpha = 1
+                self.resetNO.alpha = 1
+            })
+        })
+    }
+    @IBAction func resetYES(_ sender: UIButton){
+        resetGame()
+        resetYES.isEnabled = false
+        resetNO.isEnabled = false
+        resetButton.isEnabled = true
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+            self.resetYES.alpha = 0
+            self.resetNO.alpha = 0
+        }, completion: {
+            _ in
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                self.resetButton.alpha = 1
+            })
+        })
+    }
+    @IBAction func resetNO(_ sender:UIButton){
+        hintLabel.text = currentWord.1
+        resetYES.isEnabled = false
+        resetNO.isEnabled = false
+        resetButton.isEnabled = true
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+            self.resetYES.alpha = 0
+            self.resetNO.alpha = 0
+        }, completion: {
+            _ in
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                self.resetButton.alpha = 1
+            })
+        })
+    }
+    func resetGame(){
+        grid = [
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+        ]
+        answerGrid = grid
+        currentButtonX = 0
+        currentButtonY = 0
+        currentWordLength = 0
+        currentLetterCount = 0
+        currentX = 0
+        currentY = 0
+        currentWord = (" "," ")
+        currentOrientation = true
+        intersectionCounted = false
+        intersectIndex = nil
+        buttonHistory = []
+        gameOver = false
+        wordCount = 0
+        for y in 0 ... 14 {
+            for x in 0 ... 14 {
+                buttons[y][x].setTitle(" ", for: .normal)
+                buttons[y][x].backgroundColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
+                buttons[y][x].borderColor = UIColor(displayP3Red: 49/255, green: 51/255, blue: 53/255, alpha: 1)
+                buttons[y][x].borderWidth = 1
+                buttons[y][x].X = x
+                buttons[y][x].Y = y
+                buttons[y][x].isEnabled = false
+            }
+        }
+        generator.reset()
+        startGame()
+        buttonPressed(buttons[currentButtonY][currentButtonX])
+    }
+    @IBAction func againButton(_ sender: UIButton){
+        resetGame()
+        endLabel.alpha = 0
+        againButton.alpha = 0
+        notAgainButton.alpha = 0
+        againButton.isEnabled = false
+        notAgainButton.isEnabled = false
+        resetButton.isEnabled = true
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+            self.hintLabel.alpha = 1
+            self.resetButton.alpha = 1
+        })
+    }
+    @IBAction func notAgainButton(_ sender: UIButton){
+        invisTextField.resignFirstResponder()
+        UIView.animate(withDuration: 1.5, animations: {
+            self.view.alpha = 0
+        }, completion: {
+            _ in
+            self.performSegue(withIdentifier: "toMenu", sender: self)
+        })
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -490,7 +630,41 @@ class StandardVC : UIViewController {
             }
         }
         startGame()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+        //DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+        //    self.buttonPressed(self.buttons[self.currentButtonY][self.currentButtonX])
+        //})
+        endLabel.alpha = 0
+        endLabel.textColor = UIColor.white
+        resetButton.setTitle("reset", for: .normal)
+        resetButton.setTitleColor(UIColor(displayP3Red: 1, green: 203/255, blue: 5/255, alpha: 1), for: .normal)
+        resetYES.setTitle("yes", for: .normal)
+        resetYES.setTitleColor(UIColor(displayP3Red: 1, green: 203/255, blue: 5/255, alpha: 1), for: .normal)
+        resetNO.setTitle("no", for: .normal)
+        resetNO.setTitleColor(UIColor(displayP3Red: 1, green: 203/255, blue: 5/255, alpha: 1), for: .normal)
+        resetYES.alpha = 0
+        resetNO.alpha = 0
+        resetYES.isEnabled = false
+        resetNO.isEnabled = false
+        againButton.isEnabled = false
+        againButton.setTitle("yes", for: .normal)
+        againButton.setTitleColor(UIColor(displayP3Red: 1, green: 203/255, blue: 5/255, alpha: 1), for: .normal)
+        againButton.alpha = 0
+        notAgainButton.isEnabled = false
+        notAgainButton.setTitle("no", for: .normal)
+        notAgainButton.setTitleColor(UIColor(displayP3Red: 1, green: 203/255, blue: 5/255, alpha: 1), for: .normal)
+        notAgainButton.alpha = 0
+        backButton.setTitle("back", for: .normal)
+        backButton.setTitleColor(UIColor(displayP3Red: 1, green: 203/255, blue: 5/255, alpha: 1), for: .normal)
+        backdropLabel.text = ""
+        backdropLabel.backgroundColor = UIColor(displayP3Red: 50/255, green: 62/255, blue: 64/255, alpha: 1)
+        self.view.alpha = 0
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        UIView.animate(withDuration: 1.5, animations: {
+            self.view.alpha = 1
+        }, completion: {
+            _ in
             self.buttonPressed(self.buttons[self.currentButtonY][self.currentButtonX])
         })
     }

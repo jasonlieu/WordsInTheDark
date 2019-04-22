@@ -9,103 +9,19 @@
 import UIKit
 
 class Dictionary {
-    var words : [(String, String)] =
-        [   //cannot start with double letters
-            ("APPLE", "Red fruit"),
-            ("COW", "Moo"),
-            ("BOX", "Hollow cube"),
-            ("GEM", "Precious stone"),
-            ("LAMB", "Young sheep"),
-            ("HOME", "____ sweet ____"),
-            ("RUN", "Faster than walking"),
-            ("JUMP", "Leap in the air"),
-            ("BEER", "Booze"),
-            ("ZEBRA", "Striped horse"),
-            ("SOCK" , "Foot glove"),
-            ("WEAK", "Not very strong"),
-            ("YELL", "Exclaim loudly"),
-            ("ASK", "To question"),
-            ("WIPE", "Clean with towel"),
-            ("SHOE", "Goes over your sock"),
-            ("WIRE", "Electric string"),
-            ("ALL", "Everything"),
-            ("CAN", "Sealed aluminum cup"),
-            ("KELP", "Seaweed"),
-            ("USE", "Utilize"),
-            ("JUNK" , "Garbage"),
-            ("SHIN", "Below the knee"),
-            ("KID", "Young person"),
-            ("JOG", "Fast walk, slow run"),
-            ("WAND", "Magic stick"),
-            ("WEST", "Opposite of East"),
-            ("QUIZ", "Test"),
-            ("ZEN", "Relaxed"),
-            ("FIZZ", "Bubbling or hissing"),
-            ("COZY", "Comfortable"),
-            ("PARTY", "Social gathering"),
-            ("BEAR", "Teddy ____"),
-            ("HELP", "To support"),
-            ("FRAME", "Falsely accuse"),
-            ("SORT", "To arrange"),
-            ("HAPPY", "Cheerful mood"),
-            ("SAD", "Feeling down"),
-            ("BEE", "Insects that make honey"),
-            ("SWIM", "Propel in water"),
-            ("WIND", "Breeze"),
-            ("EAST", "Opposite of West"),
-            ("WARM", "Hot and cold"),
-            ("RAIN", "Water is falling from the sky"),
-            ("SUN", "Star"),
-            ("CLOUD", "Puffs in the sky"),
-            ("PUPPY", "Young dog"),
-            ("FELINE", "Kitty"),
-            ("AVIAN", "Bird"),
-            ("HAT", "Headwear"),
-            ("QUICK", "Fast"),
-            ("QUEASY", "Nauseous"),
-            ("GRAY", "Light black"),
-            ("AQUA", "Water"),
-            ("WALTZ", "Ballroom dance"),
-            ("JEWEL", "Precious gem"),
-            ("WIZARD", "Mage"),
-            ("JUMBO", "Large"),
-            ("BOOTY", "Pirate's treasure"),
-            ("SEEK", "Find"),
-            ("SHRIMP", "Prawn"),
-            ("BISHOP", "Chess piece"),
-            ("ROOK", "Chess piece"),
-            ("CITRUS", "Oranges and lemons"),
-            ("FRUIT", "Apples and oranges"),
-            ("QUEUE", "Waiting line"),
-            ("DELETE", "Backspace"),
-            ("OPTION", "Choice"),
-            ("PEPPER", "Salt and ______"),
-            ("PINKY", "Promise finger"),
-            ("ROCKET", "Spacecraft"),
-            ("LABOR", "Manual work"),
-            ("PIECE", "Part of a whole"),
-            ("LAUNCH", "Blast off"),
-            ("ALIEN", "Extraterrestrial"),
-            ("RIOT", "Public disturbance"),
-            ("PITCH", "Throw"),
-            ("GUILD", "Clan"),
-            ("ROUND", "No edges"),
-            ("LEMON", "Sour fruit"),
-            ("GRAPE", "Wine berry"),
-            ("GOOSE", "Waterfowl"),
-            ("NEXUS", "Center, focal point"),
-            ("NARK", "Tattletale"),
-            ("ARES", "Greek god of war"),
-            ("MESO", "____potamia, land between two rivers")
-        ]
+    var words : [(String, String)] = []
     var recentlyUsed : [(String, String)] = []
 
     func mixItUp(){
         words.shuffle()
     }
     func firstWord() -> (String, String){
-        let index = Int.random(in: 0..<words.count)
-        let result = words[index]
+        var result : (String, String) = ("","")
+        var index = Int.random(in: 0..<words.count)
+        while result.0.count > 6 || result.0 == ""{
+            index = Int.random(in: 0..<words.count)
+            result = words[index]
+        }
         words.remove(at: index)
         return result
     }
@@ -115,6 +31,9 @@ class Dictionary {
             recentlyUsed.remove(at: 0)
         }
         for current in words{
+            if current.0.count > 6 {
+                continue
+            }
             if current.0.contains(intersectLetter){
                 let index = words.index {
                     $0 == current.0 && $1 == current.1
@@ -271,7 +190,7 @@ class Dictionary {
                             grid[intersectY - 1][intersectX  - (pre.count - i + 1)].letter != " "){
                             return false
                         }
-                        if intersectY > 14 && (grid[intersectY + 1][intersectX  - (pre.count - i + 1)].letter != "-" &&
+                        if intersectY < 14 && (grid[intersectY + 1][intersectX  - (pre.count - i + 1)].letter != "-" &&
                             grid[intersectY + 1][intersectX  - (pre.count - i + 1)].letter != " "){
                             return false
                         }
@@ -303,5 +222,24 @@ class Dictionary {
             }
         }
         return true
+    }
+    init() {
+        guard let path = Bundle.main.path(forResource: "wordFile", ofType: "json") else {return}
+        let url = URL(fileURLWithPath: path)
+        do {
+            let data = try Data(contentsOf: url)
+            let parsed = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+            guard let wordsArray = parsed as? [Any] else {return}
+            for entry in wordsArray {
+                guard let wordEntry = entry as? [String: Any] else {return}
+                guard let word = wordEntry["word"] as? String else {return}
+                guard let hint = wordEntry["hint"] as? String else {return}
+                words.append((word, hint))
+            }
+            
+        }
+        catch {
+            print(error)
+        }
     }
 }

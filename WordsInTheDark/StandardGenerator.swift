@@ -9,7 +9,7 @@
 import UIKit
 
 class StandardGenerator {
-    let dictionary : Dictionary = Dictionary()
+    var dictionary : Dictionary = Dictionary()
     var wordHistory : [((String, String), Int, Int, Bool)] = [] //(word, hint) , X, Y, orientation
     var currentWord : (String, String) = (" ", " ")
     var currentX : Int = 1
@@ -167,5 +167,15 @@ class StandardGenerator {
         }
     }
     func gameOver(){
+    }
+    func reset(){
+        wordHistory = [] //(word, hint) , X, Y, orientation
+        currentWord = (" ", " ")
+        currentX = 1
+        currentY = 1
+        currentOrientation = true
+        intersectXY = (0,0)
+        grid = (0...14).map { _ in (0...14).map { _ in StandardSquare() } }
+        dictionary = Dictionary()
     }
 }
