@@ -1,0 +1,702 @@
+[
+    {
+        "word": "APPLE",
+        "hint": "Red fruit"
+    },
+    {
+        "word": "LAMB",
+        "hint": "Young sheep"
+    },
+    {
+        "word": "GUILD",
+        "hint": "Clan"
+    },
+    {
+        "word": "GEM",
+        "hint": "Precious stone"
+    },
+    {
+        "word": "HOME",
+        "hint": "____ sweet ____"
+    },
+    {
+        "word": "BEER",
+        "hint": "Booze"
+    },
+    {
+        "word": "ZEBRA",
+        "hint": "Striped horse"
+    },
+    {
+        "word": "ASK",
+        "hint": "To question"
+    },
+    {
+        "word": "WIRE",
+        "hint": "Conducts electricity"
+    },
+    {
+        "word": "KELP",
+        "hint": "Seaweed"
+    },
+    {
+        "word": "JUNK",
+        "hint": "Garbage"
+    },
+    {
+        "word": "WAND",
+        "hint": "Magic stick"
+    },
+    {
+        "word": "STAFF",
+        "hint": "Wizard's weapon of choice"
+    },
+    {
+        "word": "ZEN",
+        "hint": "Relaxed"
+    },
+    {
+        "word": "COZY",
+        "hint": "Comfortable"
+    },
+    {
+        "word": "FELINE",
+        "hint": "Kitty"
+    },
+    {
+        "word": "AVIAN",
+        "hint": "Bird"
+    },
+    {
+        "word": "QUEASY",
+        "hint": "Nauseous"
+    },
+    {
+        "word": "WIND",
+        "hint": "Breeze"
+    },
+    {
+        "word": "FRAME",
+        "hint": "Falsely accuse"
+    },
+    {
+        "word": "AQUA",
+        "hint": "____man, protector of the deep"
+    },
+    {
+        "word": "WIZARD",
+        "hint": "Mage"
+    },
+    {
+        "word": "JEWEL",
+        "hint": "Precious gem"
+    },
+    {
+        "word": "WALTZ",
+        "hint": "Ballroom dance"
+    },
+    {
+        "word": "LAUNCH",
+        "hint": "Blast off"
+    },
+    {
+        "word": "ALIEN",
+        "hint": "Extraterrestrial"
+    },
+    {
+        "word": "PITCH",
+        "hint": "Throw"
+    },
+    {
+        "word": "GOOSE",
+        "hint": "Waterfowl"
+    },
+    {
+        "word": "MESO",
+        "hint": "____potamia, land between two rivers"
+    },
+    {
+        "word": "ARES",
+        "hint": "Greek god of war"
+    },
+    {
+        "word": "ATHENA",
+        "hint": "Greek goddess of wisdom"
+    },
+    {
+        "word": "ARTEMIS",
+        "hint": "Greek goddess of the hunt"
+    },
+    {
+        "word": "APOLLO",
+        "hint": "Greek god of prophecy"
+    },
+    {
+        "word": "HERA",
+        "hint": "Greek goddess of marriage"
+    },
+    {
+        "word": "TITANS",
+        "hint": "Children of Uranus and Gaea"
+    },
+    {
+        "word": "NARK",
+        "hint": "Tattletale"
+    },
+    {
+        "word": "PIECE",
+        "hint": "Part of a whole"
+    },
+    {
+        "word": "PIZZA",
+        "hint": "Italian pie"
+    },
+    {
+        "word": "DELETE",
+        "hint": "Backspace"
+    },
+    {
+        "word": "QUEUE",
+        "hint": "First in, first out"
+    },
+    {
+        "word": "JUMBO",
+        "hint": "Large"
+    },
+    {
+        "word": "SHRIMP",
+        "hint": "Prawn"
+    },
+    {
+        "word": "OPTION",
+        "hint": "Choice"
+    },
+    {
+        "word": "BISHOP",
+        "hint": "Chess piece"
+    },
+    {
+        "word": "ASSIST",
+        "hint": "Help"
+    },
+    {
+        "word": "PUPPY",
+        "hint": "Young dog"
+    },
+    {
+        "word": "GARDE",
+        "hint": "En _____!"
+    },
+    {
+        "word": "LOKI",
+        "hint": "Norse god of mischief"
+    },
+    {
+        "word": "THOR",
+        "hint": "Norse god of thunder"
+    },
+    {
+        "word": "NEXUS",
+        "hint": "Center, focal point"
+    },
+    {
+        "word": "TODAY",
+        "hint": "_____ is the day"
+    },
+    {
+        "word": "DUNCE",
+        "hint": "Wears paper cone hat"
+    },
+    {
+        "word": "FADE",
+        "hint": "Gradually disappear"
+    },
+    {
+        "word": "RIVEN",
+        "hint": "Torn apart"
+    },
+    {
+        "word": "FRUGAL",
+        "hint": "Cheap"
+    },
+    {
+        "word": "SENSES",
+        "hint": "We have five"
+    },
+    {
+        "word": "SUIT",
+        "hint": "Holds 13 cards"
+    },
+    {
+        "word": "DRAGON",
+        "hint": "Mythical flying lizard"
+    },
+    {
+        "word": "ABOMINABLE",
+        "hint": "Snowman"
+    },
+    {
+        "word": "COYOTE",
+        "hint": "Chases roadrunners"
+    },
+    {
+        "word": "LINUS",
+        "hint": "Creator of the Linux kernel"
+    },
+    {
+        "word": "PAJAMAS",
+        "hint": "Sleepwear"
+    },
+    {
+        "word": "BRUNCH",
+        "hint": "Late morning meal"
+    },
+    {
+        "word": "JACKAL",
+        "hint": "Anubis"
+    },
+    {
+        "word": "OXYGEN",
+        "hint": "Most abundant element on Earth"
+    },
+    {
+        "word": "OSTRICH",
+        "hint": "Largest living bird species"
+    },
+    {
+        "word": "HOBBES",
+        "hint": "Philosopher and a tiger"
+    },
+    {
+        "word": "DURIAN",
+        "hint": "Spiky fruit"
+    },
+    {
+        "word": "JULEP",
+        "hint": "Mint _____"
+    },
+    {
+        "word": "RARE",
+        "hint": "Hard to come by"
+    },
+    {
+        "word": "DELECTABLE",
+        "hint": "Delicious"
+    },
+    {
+        "word": "PALETTE",
+        "hint": "Range of colors"
+    },
+    {
+        "word": "VITALITY",
+        "hint": "Good health"
+    },
+    {
+        "word": "ANALOG",
+        "hint": "Type of clock"
+    },
+    {
+        "word": "SHIVA",
+        "hint": "Hindu god, the destroyer"
+    },
+    {
+        "word": "VISHNU",
+        "hint": "Hindu god, the preserver"
+    },
+    {
+        "word": "BRAHMA",
+        "hint": "Hindu god, the creator"
+    },
+    {
+        "word": "ZEUS",
+        "hint": "Greek god of the sky"
+    },
+    {
+        "word": "POSEIDON",
+        "hint": "Greek god of the sea"
+    },
+    {
+        "word": "ATLANTIS",
+        "hint": "Lost city of ________"
+    },
+    {
+        "word": "ELDORADO",
+        "hint": "City of gold"
+    },
+    {
+        "word": "GIZA",
+        "hint": "Home of the Sphinx"
+    },
+    {
+        "word": "PRIME",
+        "hint": "Highest quality"
+    },
+    {
+        "word": "LANCE",
+        "hint": "Spear used by cavalry"
+    },
+    {
+        "word": "JAVELIN",
+        "hint": "Thrown spear"
+    },
+    {
+        "word": "PHALANX",
+        "hint": "Greek military formation"
+    },
+    {
+        "word": "SAFARI",
+        "hint": "Wildlife expedition or browser"
+    },
+    {
+        "word": "SECOND",
+        "hint": "Silver medal"
+    },
+    {
+        "word": "DELEGATE",
+        "hint": "Representative"
+    },
+    {
+        "word": "DRINK",
+        "hint": "Should be done responsibly"
+    },
+    {
+        "word": "LINUX",
+        "hint": "Open source operating system"
+    },
+    {
+        "word": "BANANA",
+        "hint": "Curved fruit"
+    },
+    {
+        "word": "SURVEY",
+        "hint": "Examine land or opinions"
+    },
+    {
+        "word": "ORANGE",
+        "hint": "Citrus fruit"
+    },
+    {
+        "word": "BROCCOLI",
+        "hint": "Little trees"
+    },
+    {
+        "word": "EUREKA",
+        "hint": "Discovery!"
+    },
+    {
+        "word": "FOSSIL",
+        "hint": "Remains"
+    },
+    {
+        "word": "COURTEOUS",
+        "hint": "Polite and respectful"
+    },
+    {
+        "word": "CAVALRY",
+        "hint": "Soldiers on horseback"
+    },
+    {
+        "word": "ENCRYPTION",
+        "hint": "Secret message"
+    },
+    {
+        "word": "PICASSO",
+        "hint": "Painter of Guernica"
+    },
+    {
+        "word": "TERRIER",
+        "hint": "Scottish"
+    },
+    {
+        "word": "PLAYER",
+        "hint": "Most valuable"
+    },
+    {
+        "word": "CAFFEINE",
+        "hint": "Stimulant found in coffee"
+    },
+    {
+        "word": "INCA",
+        "hint": "Built Machu Picchu"
+    },
+    {
+        "word": "QUETZALCOATL",
+        "hint": "Feathered serpent"
+    },
+    {
+        "word": "GARFIELD",
+        "hint": "Hates Mondays"
+    },
+    {
+        "word": "SEOUL",
+        "hint": "SAMSUNG headquarters"
+    },
+    {
+        "word": "BOBA",
+        "hint": "Tapioca balls"
+    },
+    {
+        "word": "LABCOAT",
+        "hint": "Research attire"
+    },
+    {
+        "word": "SEDIMENT",
+        "hint": "Carried by rivers"
+    },
+    {
+        "word": "EROSION",
+        "hint": "Wear away"
+    },
+    {
+        "word": "BINARY",
+        "hint": "1's and 0's"
+    },
+    {
+        "word": "UNAGI",
+        "hint": "Freshwater eel"
+    },
+    {
+        "word": "DODO",
+        "hint": "Extinct, know for being stupid"
+    },
+    {
+        "word": "PENGUIN",
+        "hint": "Don't fly, just waddle"
+    },
+    {
+        "word": "DISNEYLAND",
+        "hint": "Happiest place on Earth"
+    },
+    {
+        "word": "CORE",
+        "hint": "Center of the Earth"
+    },
+    {
+        "word": "SLEDGE",
+        "hint": "Type of hammer"
+    },
+    {
+        "word": "NOOKS",
+        "hint": "And crannies"
+    },
+    {
+        "word": "EVE",
+        "hint": "Day before festivities"
+    },
+    {
+        "word": "HIP",
+        "hint": "Followed by hop"
+    },
+    {
+        "word": "CUEBALL",
+        "hint": "White ball"
+    },
+    {
+        "word": "DEPOSIT",
+        "hint": "Store"
+    },
+    {
+        "word": "TURING",
+        "hint": "Test for robots"
+    },
+    {
+        "word": "KERATIN",
+        "hint": "Hairs and nails are made of"
+    },
+    {
+        "word": "DATA",
+        "hint": "Modern miners"
+    },
+    {
+        "word": "VIOLA",
+        "hint": "Similar to violin but deeper"
+    },
+    {
+        "word": "VACANCY",
+        "hint": "Open position"
+    },
+    {
+        "word": "AGLET",
+        "hint": "Shoelace tip"
+    },
+    {
+        "word": "BUGS",
+        "hint": "Program errors"
+    },
+    {
+        "word": "TURBINE",
+        "hint": "Gathers wind energy"
+    },
+    {
+        "word": "EXCALIBUR",
+        "hint": "Sword in the stone"
+    },
+    {
+        "word": "SOURCREAM",
+        "hint": "Chip flavor, with onions"
+    },
+    {
+        "word": "VANILLA",
+        "hint": "Ordinary"
+    },
+    {
+        "word": "HARRY",
+        "hint": "The boy who lived"
+    },
+    {
+        "word": "ANDROMEDA",
+        "hint": "Nearest galaxy"
+    },
+    {
+        "word": "CENTURY",
+        "hint": "Turn of the _____"
+    },
+    {
+        "word": "VERSAILLES",
+        "hint": "French palace"
+    },
+    {
+        "word": "EIFFEL",
+        "hint": "Tower in France"
+    },
+    {
+        "word": "TAIPEI",
+        "hint": "Capital of Taiwan"
+    },
+    {
+        "word": "BOVINE",
+        "hint": "Cattle"
+    },
+    {
+        "word": "PLACEBO",
+        "hint": "psychological, not physiological"
+    },
+    {
+        "word": "FONDUE",
+        "hint": "Cheese dip"
+    },
+    {
+        "word": "ROSES",
+        "hint": "Are red"
+    },
+    {
+        "word": "VIOLETS",
+        "hint": "Are blue"
+    },
+    {
+        "word": "STEAM",
+        "hint": "Boiled water"
+    },
+    {
+        "word": "MJOLNIR",
+        "hint": "Thor's hammer"
+    },
+    {
+        "word": "BIRDIE",
+        "hint": "One under par"
+    },
+    {
+        "word": "STANLEE",
+        "hint": "Excelsior"
+    },
+    {
+        "word": "ARBORETUM",
+        "hint": "Zoo for trees"
+    },
+    {
+        "word": "STARBUCKS",
+        "hint": "Popular coffee chain"
+    },
+    {
+        "word": "ENROLL",
+        "hint": "Sign up for"
+    },
+    {
+        "word": "SHELL",
+        "hint": "Protective case"
+    },
+    {
+        "word": "SOCRATES",
+        "hint": "Founder of western philosophy"
+    },
+    {
+        "word": "PLATO",
+        "hint": "Student of Socrates"
+    },
+    {
+        "word": "ARISTOTLE",
+        "hint": "Student of Plato"
+    },
+    {
+        "word": "BEACH",
+        "hint": "Along the coast"
+    },
+    {
+        "word": "SUNSCREEN",
+        "hint": "UV protection"
+    },
+    {
+        "word": "BAIL",
+        "hint": "Back out of a commitment"
+    },
+    {
+        "word": "FLEE",
+        "hint": "Run away"
+    },
+    {
+        "word": "LONDON",
+        "hint": "2012 Olympics"
+    },
+    {
+        "word": "FRIDAY",
+        "hint": "The 13th"
+    },
+    {
+        "word": "BLACKBEARD",
+        "hint": "Captain of Queen Anne's Revenge"
+    },
+    {
+        "word": "RABBIT",
+        "hint": "Animal pulled from hats"
+    },
+    {
+        "word": "EVEREST",
+        "hint": "Highest peak"
+    },
+    {
+        "word": "ANDES",
+        "hint": "South American mountain range"
+    },
+    {
+        "word": "CEPHALOPOD",
+        "hint": "Squids and octopuses"
+    },
+    {
+        "word": "NOCTURNAL",
+        "hint": "Cats and owls"
+    },
+    {
+        "word": "CELSIUS",
+        "hint": "Centigrade scale"
+    },
+    {
+        "word": "KELVIN",
+        "hint": "C - 273.15"
+    },
+    {
+        "word": "HIEROGLYPH",
+        "hint": "Egyption writing"
+    },
+    {
+        "word": "POSTSCRIPT",
+        "hint": "After signature, PS"
+    },
+    {
+        "word": "KNOCK",
+        "hint": "_____ on wood"
+    },
+    {
+        "word": "STOOGES",
+        "hint": "Moe, Curly, and Larry"
+    }
+]

@@ -35,7 +35,7 @@ class Dictionary {
                 continue
             }
             if current.0.contains(intersectLetter){
-                let index = words.index {
+                let index = words.firstIndex {
                     $0 == current.0 && $1 == current.1
                 }
                 let cut = splitWord(word: current.0, splitLetter: intersectLetter)
@@ -86,7 +86,7 @@ class Dictionary {
                 let cut = splitWord(word: current.0, splitLetter: intersectLetter)
                 if orientation {
                     if intersectY - cut[0].count >= 0 && 14 - cut[1].count > intersectY {
-                        let index = words.index {
+                        let index = words.firstIndex {
                             $0 == current.0 && $1 == current.1
                         }
                         if !checkValid(intersectX: intersectX, intersectY: intersectY, cut: cut, grid: grid, orientation: orientation) {
@@ -98,7 +98,7 @@ class Dictionary {
                 }
                 else {
                     if intersectX - cut[0].count >= 1 && 14 - cut[1].count > intersectX {
-                        let index = words.index {
+                        let index = words.firstIndex {
                             $0 == current.0 && $1 == current.1
                         }
                         if !checkValid(intersectX: intersectX, intersectY: intersectY, cut: cut, grid: grid, orientation: orientation) {
